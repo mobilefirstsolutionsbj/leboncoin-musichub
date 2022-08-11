@@ -9,24 +9,27 @@
         android:id="@+id/albums_fragment"
         android:name="fr.leboncoin.musichub.presentation.ui.albums.AlbumsFragment"
         android:label="fragment_master"
+        app:launchSingleTop="true"
         tools:layout="@layout/fragment_albums">
         <action
             android:id="@+id/action_albums_fragment_to_album_tracks_fragment"
+            app:destination="@id/album_tracks_fragment"
             app:launchSingleTop="true"
-            app:destination="@id/album_tracks_fragment" />
+            app:popUpToSaveState="true">
+            <argument
+                android:name="album"
+                android:defaultValue="@null"
+                app:argType="fr.leboncoin.musichub.domain.model.Album"
+                app:nullable="true" />
+        </action>
     </fragment>
 
     <fragment
         android:id="@+id/album_tracks_fragment"
         android:name="fr.leboncoin.musichub.presentation.ui.album_tracks.AlbumTracksFragment"
         android:label="fragment_detail"
-        tools:layout="@layout/fragment_album_tracks">
-        <action
-            android:id="@+id/action_album_tracks_fragment_to_albums_fragment"
-            app:launchSingleTop="true"
-            app:popUpTo="@id/album_tracks_fragment"
-            app:popUpToInclusive="true"
-            app:destination="@id/albums_fragment" />
-    </fragment>
+        app:launchSingleTop="true"
+        app:popUpTo="@id/albums_fragment"
+        tools:layout="@layout/fragment_album_tracks" />
 
 </navigation>

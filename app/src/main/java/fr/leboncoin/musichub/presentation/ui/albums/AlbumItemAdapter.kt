@@ -76,7 +76,7 @@ class AlbumItemAdapter(
         holder.bind(album)
     }
 
-    inner class DiffUtilCallback(
+    private class DiffUtilCallback(
         private val oldList: List<Album>,
         private val newList: List<Album>
     ) : DiffUtil.Callback() {

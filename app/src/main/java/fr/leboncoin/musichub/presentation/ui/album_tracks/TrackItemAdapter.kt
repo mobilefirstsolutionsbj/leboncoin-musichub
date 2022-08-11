@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import fr.leboncoin.musichub.R
 import fr.leboncoin.musichub.domain.model.Track
@@ -24,11 +25,10 @@ class TrackItemAdapter(
     }
 
     fun updateDataSet(items: List<Track>) {
+        val diffResult = DiffUtil.calculateDiff(DiffUtilCallback(tracks, items))
         tracks.clear()
         tracks.addAll(items)
-        items.forEachIndexed { index, _ ->
-            notifyItemChanged(index)
-        }
+        diffResult.dispatchUpdatesTo(this)
     }
 
     override fun getItemCount(): Int {
@@ -38,5 +38,29 @@ class TrackItemAdapter(
     override fun onBindViewHolder(holder: TrackItemViewHolder, index: Int) {
         val track: Track = tracks[index]
         holder.bind(track)
+    }
+
+    private class DiffUtilCallback(
+        private val oldList: List<Track>,
+        private val newList: List<Track>
+    ) : DiffUtil.Callback() {
+        override fun getOldListSize(): Int {
+            return oldList.size
+        }
+
+        override fun getNewListSize(): Int {
+            return newList.size
+        }
+
+        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+            return oldList[oldItemPosition].albumId == newList[newItemPosition].albumId
+        }
+
+        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+            return when (oldList[oldItemPosition].albumId) {
+                newList[newItemPosition].albumId -> true
+                else -> false
+            }
+        }
     }
 }

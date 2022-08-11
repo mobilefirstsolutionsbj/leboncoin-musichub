@@ -1,10 +1,12 @@
 package fr.leboncoin.musichub.presentation.ui.album_tracks
 
 import android.os.Bundle
+import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,27 +14,27 @@ import dagger.hilt.android.AndroidEntryPoint
 import fr.leboncoin.musichub.R
 import fr.leboncoin.musichub.databinding.FragmentAlbumTracksBinding
 import fr.leboncoin.musichub.domain.model.Album
-import fr.leboncoin.musichub.domain.model.Track
 import fr.leboncoin.musichub.presentation.base.BaseFragment
 import fr.leboncoin.musichub.presentation.ui.albums.AlbumsFragment
-
+import fr.leboncoin.musichub.presentation.ui.albums.AlbumsViewModel
 
 @AndroidEntryPoint
 class AlbumTracksFragment : BaseFragment() {
 
-    companion object {
-        const val ALBUM_TRACKS = "ALBUM_TRACKS"
-    }
+    private val viewModel: AlbumsViewModel by activityViewModels()
 
-    private lateinit var navController: NavController
-    private val albumTracks: ArrayList<Track> = arrayListOf()
+    private var album: Album? = null
     private var rootView: View? = null
     private var binding: FragmentAlbumTracksBinding? = null
     private var trackItemAdapter: TrackItemAdapter? = null
 
+    private var mListState: Parcelable? = null
+    private var savedInstanceState: Parcelable? = null
     override var progressBar: ProgressBar?
         get() = binding?.albumTracksFragmentProgressBar
-        set(_) { }
+        set(_) {}
+
+    private lateinit var navController: NavController
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,23 +46,26 @@ class AlbumTracksFragment : BaseFragment() {
                 false
             )
             rootView!!
-        } else rootView!!
+        } else {
+            rootView!!
+        }
     }
 
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
         super.onViewStateRestored(savedInstanceState)
-        if (savedInstanceState != null) {
-            restoreFragmentState(savedInstanceState)
+        mListState = savedInstanceState?.getParcelable(AlbumsFragment.LIST_STATE_KEY)
+        binding?.albumTracksFragmentList?.let { recyclerView ->
+            recyclerView.layoutManager?.onRestoreInstanceState(mListState)
         }
     }
 
-    private fun restoreFragmentState(savedInstanceState: Bundle) {
-        savedInstanceState.getParcelableArrayList<Track>(ALBUM_TRACKS)
-            ?.let { savedAlbumTracks ->
-                this.albumTracks.clear()
-                this.albumTracks.addAll(savedAlbumTracks)
-                this.trackItemAdapter?.updateDataSet(savedAlbumTracks)
-            }
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        binding?.albumTracksFragmentList?.let { recyclerView ->
+            this.mListState = recyclerView.layoutManager?.onSaveInstanceState()
+            outState.putParcelable(AlbumsFragment.LIST_STATE_KEY, mListState)
+            this.savedInstanceState = outState
+        }
     }
 
     override fun onResume() {
@@ -69,6 +74,7 @@ class AlbumTracksFragment : BaseFragment() {
             navController.navigateUp()
         }
         arguments?.getParcelable<Album>(AlbumsFragment.ALBUM)?.let { album ->
+            this.album = album
             trackItemAdapter?.updateDataSet(album.tracks)
         }
     }
@@ -82,19 +88,16 @@ class AlbumTracksFragment : BaseFragment() {
         )
         binding?.let { binding ->
             setupViews(binding)
-            savedInstanceState?.let {
-                restoreFragmentState(it)
-            }
+        }
+        viewModel.selectedItem.observe(requireActivity()) { album ->
+            this.album = album
+            trackItemAdapter?.updateDataSet(album.tracks)
         }
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putParcelableArrayList(ALBUM_TRACKS, this.albumTracks)
-    }
-
     private fun setupViews(binding: FragmentAlbumTracksBinding) {
-        val layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        val layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         binding.albumTracksFragmentList.let { recyclerView ->
             recyclerView.layoutManager = layoutManager
             recyclerView.setHasFixedSize(true)

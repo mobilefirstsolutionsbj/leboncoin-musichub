@@ -2,7 +2,6 @@ package fr.leboncoin.musichub.presentation.ui.albums
 
 import android.os.Bundle
 import androidx.navigation.NavController
-import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
@@ -10,7 +9,7 @@ import fr.leboncoin.musichub.databinding.ActivityAlbumsBinding
 import fr.leboncoin.musichub.presentation.base.BaseActivity
 
 @AndroidEntryPoint
-class AlbumsActivity : BaseActivity(), NavController.OnDestinationChangedListener {
+class AlbumsActivity : BaseActivity() {
 
     private lateinit var navController: NavController
 
@@ -29,6 +28,7 @@ class AlbumsActivity : BaseActivity(), NavController.OnDestinationChangedListene
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initVariables()
+        println("${getTag()} onCreate() - savedInstanceState $savedInstanceState")
         setContentView(binding?.root)
     }
 
@@ -36,40 +36,30 @@ class AlbumsActivity : BaseActivity(), NavController.OnDestinationChangedListene
         binding = ActivityAlbumsBinding.inflate(layoutInflater)
         binding?.let { binding ->
             bindViews(binding)
-            setupViews()
         }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        saveFragmentsStates(outState)
-    }
-
-    private fun saveFragmentsStates(outState: Bundle) {
         this.savedInstanceState = outState
         navController.saveState()
     }
 
-    private fun bindViews(binding: ActivityAlbumsBinding) {
-        val navHostFragment = supportFragmentManager.findFragmentById(binding.mainFragmentContainer.id) as NavHostFragment
-        navController = navHostFragment.findNavController()
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        this.savedInstanceState = savedInstanceState
+        navController.restoreState(savedInstanceState)
     }
 
-    private fun setupViews() {
-        navController.addOnDestinationChangedListener(this)
+    private fun bindViews(binding: ActivityAlbumsBinding) {
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(binding.mainFragmentContainer.id) as NavHostFragment
+        navController = navHostFragment.findNavController()
     }
 
     override fun onDestroy() {
         super.onDestroy()
         binding = null
         savedInstanceState = null
-    }
-
-    override fun onDestinationChanged(
-        controller: NavController,
-        destination: NavDestination,
-        arguments: Bundle?
-    ) {
-        println("[ ${getTag()} ] onDestinationChanged() - arguments: $arguments")
     }
 }

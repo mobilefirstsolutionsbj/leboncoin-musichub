@@ -39,4 +39,7 @@ class FakeTracksRepository : TracksRepository {
     }
 
     override suspend fun fetchTracks() = FAKE_TRACKS
+    override suspend fun fetchLocalTracks() = FAKE_TRACKS
+
+    override suspend fun saveTracksToDB(list: List<Track>) { }
 }

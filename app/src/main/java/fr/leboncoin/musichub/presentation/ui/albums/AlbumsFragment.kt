@@ -7,9 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ProgressBar
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.navigation.NavArgument
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
@@ -26,14 +25,14 @@ import fr.leboncoin.musichub.presentation.base.BaseFragment
 class AlbumsFragment : BaseFragment(), AlbumItemClickListener {
 
     companion object {
-        const val ALBUMS = "ALBUMS"
-        const val ALBUM = "ALBUM"
+        const val ALBUMS = "albums"
+        const val ALBUM = "album"
         const val LIST_STATE_KEY = "LIST_STATE_KEY"
         const val ITEM_VIEW_CACHE_SIZE = 20
     }
 
     private val albums: ArrayList<Album> = arrayListOf()
-    private val viewModel: AlbumsViewModel by viewModels()
+    private val viewModel: AlbumsViewModel by activityViewModels()
     private var albumItemAdapter: AlbumItemAdapter? = null
     private var binding: FragmentAlbumsBinding? = null
     private var rootView: View? = null
@@ -42,10 +41,10 @@ class AlbumsFragment : BaseFragment(), AlbumItemClickListener {
     private var recyclerView: RecyclerView? = null
     private var mListState: Parcelable? = null
     private var savedInstanceState: Parcelable? = null
+
     private lateinit var navController: NavController
 
     override var progressBar: ProgressBar?
-
         get() = binding?.albumsFragmentProgressBar
         set(_) {}
 
@@ -73,23 +72,25 @@ class AlbumsFragment : BaseFragment(), AlbumItemClickListener {
         }
     }
 
-    private fun restoreFragmentState(savedInstanceState: Bundle?) {
-        if (savedInstanceState != null) {
-            savedInstanceState.getParcelableArrayList<Album>(ALBUMS)?.let { albums ->
-                albumItemAdapter?.updateDataSet(albums)
-            }
-            mListState = savedInstanceState.getParcelable(LIST_STATE_KEY)
-            recyclerView?.layoutManager?.onRestoreInstanceState(mListState)
+    private fun restoreFragmentState(savedInstanceState: Bundle) {
+        savedInstanceState.getParcelableArrayList<Album>(ALBUMS)?.let { albums ->
+            albumItemAdapter?.updateDataSet(albums)
+        }
+        mListState = savedInstanceState.getParcelable(LIST_STATE_KEY)
+        recyclerView?.let { recyclerView ->
+            recyclerView.layoutManager?.onRestoreInstanceState(mListState)
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         this.binding = FragmentAlbumsBinding.bind(view)
+
         navController = Navigation.findNavController(
             requireActivity(),
             R.id.main_fragment_container
         )
+
         binding?.let { binding ->
             bindViews(binding)
             setupViews()
@@ -166,7 +167,13 @@ class AlbumsFragment : BaseFragment(), AlbumItemClickListener {
 
         if (state.error != null) {
             swipeRefresh?.isRefreshing = false
-            rootView?.let { rootView -> showSnackBar(rootView, getString(state.error), Snackbar.LENGTH_LONG) }
+            rootView?.let { rootView ->
+                showSnackBar(
+                    rootView,
+                    getString(state.error),
+                    Snackbar.LENGTH_LONG
+                )
+            }
             progressBar?.visibility = View.GONE
         }
     }
@@ -186,17 +193,13 @@ class AlbumsFragment : BaseFragment(), AlbumItemClickListener {
     }
 
     override fun onAlbumItemClick(position: Int, item: Album) {
-        val bundle = Bundle()
-        bundle.putParcelable(ALBUM, item)
+
+        viewModel.selectAlbum(item)
+
         if (activity?.resources?.getBoolean(R.bool.isLandscape) == false) {
-            navController.navigate(
-                R.id.action_albums_fragment_to_album_tracks_fragment,
-                bundle
-            )
-        } else {
-            val argument = NavArgument.Builder().setDefaultValue(item).build()
-            navController.findDestination(R.id.album_tracks_fragment)?.addArgument(ALBUM, argument)
-            println("isLandscape")
+            val action =
+                AlbumsFragmentDirections.actionAlbumsFragmentToAlbumTracksFragment(album = item)
+            navController.navigate(action)
         }
     }
 

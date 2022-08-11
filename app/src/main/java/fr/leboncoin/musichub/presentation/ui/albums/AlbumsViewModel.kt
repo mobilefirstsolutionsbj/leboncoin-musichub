@@ -25,7 +25,15 @@ class AlbumsViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _state = MutableLiveData<FetchItemListState<Album>>()
-    val state: LiveData<FetchItemListState<Album>> = _state
+    val state: LiveData<FetchItemListState<Album>> get() = _state
+
+    private val _selectedAlbum = MutableLiveData<Album>()
+    val selectedItem: LiveData<Album> get() = _selectedAlbum
+
+    fun selectAlbum(item: Album) {
+        _selectedAlbum.postValue(item)
+        println("[ AlbumsViewModel ] - selectedItem - ${selectedItem.value}")
+    }
 
     fun fetchAlbums() {
         fetchAlbumsUseCase().onEach { result ->
