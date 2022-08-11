@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/albums_fragment">
+
+    <fragment
+        android:id="@+id/albums_fragment"
+        android:name="fr.leboncoin.musichub.presentation.ui.albums.AlbumsFragment"
+        android:label="fragment_master"
+        tools:layout="@layout/fragment_albums">
+        <action
+            android:id="@+id/action_albums_fragment_to_album_tracks_fragment"
+            app:launchSingleTop="true"
+            app:destination="@id/album_tracks_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/album_tracks_fragment"
+        android:name="fr.leboncoin.musichub.presentation.ui.album_tracks.AlbumTracksFragment"
+        android:label="fragment_detail"
+        tools:layout="@layout/fragment_album_tracks">
+        <action
+            android:id="@+id/action_album_tracks_fragment_to_albums_fragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/album_tracks_fragment"
+            app:popUpToInclusive="true"
+            app:destination="@id/albums_fragment" />
+    </fragment>
+
+</navigation>

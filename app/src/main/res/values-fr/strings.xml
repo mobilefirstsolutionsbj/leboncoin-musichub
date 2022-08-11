@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_logo_desc">Logo MusicHub</string>
+    <string name="album_img_desc">Image album</string>
+    <string name="track_overflow_button_desc">Bouton icône menu morceau</string>
+    <string name="track_thumbnail_desc">Miniature du morceau</string>
+    <string name="activity_launch_slogan">Votre moment, votre musique</string>
+    <string name="activity_albums_btn_retry">Réessayer</string>
+
+    <string name="error_unexpected_error_occurred">Une erreur est survenue lors du chargement des morceaux.\nVeuillez réessayer.</string>
+    <string name="error_check_internet_connection">Impossible de joindre le serveur. Vérifiez votre connexion internet.</string>
+</resources>

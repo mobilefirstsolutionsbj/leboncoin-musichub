@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="margin_mini">@dimen/_2sdp</dimen>
+    <dimen name="margin_tiny">@dimen/_4sdp</dimen>
+
+    <dimen name="margin_small">@dimen/_8sdp</dimen>
+    <dimen name="margin_medium">@dimen/_16sdp</dimen>
+    <dimen name="margin_large">@dimen/_24sdp</dimen>
+
+    <dimen name="padding_small">@dimen/_8sdp</dimen>
+    <dimen name="padding_medium">@dimen/_16sdp</dimen>
+    <dimen name="padding_large">@dimen/_24sdp</dimen>
+
+    <dimen name="albums_progress_bar_loader_size">@dimen/_32sdp</dimen>
+</resources>

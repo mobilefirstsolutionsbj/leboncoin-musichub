@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name" translatable="false">MusicHub</string>
+    <string name="activity_launch_footer_text" translatable="false">MusicHub\nv %1$s (%2$s)</string>
+    <string name="app_logo_desc">MusicHub Logo</string>
+    <string name="album_img_desc">Album image</string>
+    <string name="track_overflow_button_desc">Track overflow menu button</string>
+    <string name="track_thumbnail_desc">Track thumbnail</string>
+    <string name="activity_launch_slogan">Your moment, your music</string>
+    <string name="activity_albums_btn_retry">Retry</string>
+    <string name="album_item_title" translatable="false">Album #%1$s</string>
+
+    <string name="error_unexpected_error_occurred">Error while fetching.\nPlease try again</string>
+    <string name="error_check_internet_connection">Couldn\'t reach server. Check your internet connection.</string>
+</resources>

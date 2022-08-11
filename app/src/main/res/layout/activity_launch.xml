@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Theme.MusicHub.Background"
+    android:layout_width="match_parent"
+    tools:context=".presentation.ui.launch.LaunchActivity"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/appLogo"
+        android:layout_width="@dimen/_120sdp"
+        android:layout_height="@dimen/_120sdp"
+        android:contentDescription="@string/app_logo_desc"
+        android:src="@drawable/app_logo"
+        app:layout_constraintBottom_toTopOf="@+id/guideline2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/footerText"
+        style="@style/Theme.MusicHub.TextColorPrimary"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginEnd="@dimen/_16sdp"
+        android:layout_marginBottom="@dimen/_8sdp"
+        android:alpha="0.8"
+        android:fontFamily="@font/lato_regular"
+        android:gravity="center"
+        android:lineSpacingExtra="@dimen/_6sdp"
+        android:textSize="@dimen/_10ssp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="MusicHub\nv 1.0.0 (1)" />
+
+    <TextView
+        android:id="@+id/appName"
+        style="@style/Theme.MusicHub.LaunchFooter"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_small"
+        android:alpha="0.8"
+        android:gravity="center"
+        android:text="@string/app_name"
+        app:layout_constraintEnd_toEndOf="@+id/appLogo"
+        app:layout_constraintStart_toStartOf="@+id/appLogo"
+        app:layout_constraintTop_toBottomOf="@+id/guideline2" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
