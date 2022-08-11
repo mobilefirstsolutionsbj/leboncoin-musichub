@@ -69,7 +69,7 @@ class AlbumsFragment : BaseFragment(), AlbumItemClickListener {
         if (savedInstanceState != null) {
             restoreFragmentState(savedInstanceState)
         } else {
-            viewModel.fetchAlbums()
+            viewModel.fetchLocalAlbums()
         }
     }
 
@@ -141,7 +141,7 @@ class AlbumsFragment : BaseFragment(), AlbumItemClickListener {
         swipeRefresh?.setOnRefreshListener {
             if (!viewModel.state.hasActiveObservers()) {
                 observeTracks().also {
-                    viewModel.fetchAlbums()
+                    viewModel.fetchLocalAlbums()
                 }
             }
         }
@@ -158,6 +158,10 @@ class AlbumsFragment : BaseFragment(), AlbumItemClickListener {
             swipeRefresh?.isRefreshing = false
             if (albums.isNotEmpty()) {
                 didFetchAlbums(albums)
+            } else {
+                // Try fetching from local DB
+                viewModel.fetchAlbums()
+                println("// EMPTY Try fetching from remote DB")
             }
         }
 

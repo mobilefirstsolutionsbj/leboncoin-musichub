@@ -12,19 +12,17 @@ import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 
-class FetchAlbumsUseCase @Inject constructor(
+class FetchDBAlbumsUseCase @Inject constructor(
     private val repository: TracksRepository
 ) {
     companion object {
-        val TAG: String = "[ ${FetchAlbumsUseCase::class.java.simpleName} ]"
+        val TAG: String = "[ ${FetchDBAlbumsUseCase::class.java.simpleName} ]"
     }
 
     operator fun invoke(): Flow<Resource<List<Album>>> = flow {
         try {
             emit(Resource.Loading())
-            val tracks = repository.fetchTracks()
-            val albums = Utils.getAlbums(list = tracks)
-            repository.saveTracksToDB(tracks)
+            val albums = Utils.getAlbums(list = repository.fetchLocalTracks())
             emit(Resource.Success(albums))
         } catch (e: HttpException) {
             Log.e(TAG, "error: \n${e.localizedMessage}\n")
