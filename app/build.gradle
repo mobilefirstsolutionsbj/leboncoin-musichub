@@ -26,15 +26,6 @@ android {
         }
     }
 
-    signingConfigs {
-        release {
-            storeFile file(MUSICHUB_STORE_FILE_RELEASE)
-            storePassword MUSICHUB_STORE_PASSWORD_RELEASE
-            keyAlias MUSICHUB_KEY_ALIAS_RELEASE
-            keyPassword MUSICHUB_KEY_PASSWORD_RELEASE
-        }
-    }
-
     buildTypes {
         debug {
             applicationIdSuffix ".dev"
@@ -43,7 +34,6 @@ android {
             minifyEnabled false
             debuggable true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.debug
         }
 
         release {
@@ -51,14 +41,8 @@ android {
             versionNameSuffix ''
             testCoverageEnabled false
             minifyEnabled true
-
-            /**
-             * TODO:// TURN TO FALSE
-             */
-            debuggable true
-
+            debuggable false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
         }
     }
 
