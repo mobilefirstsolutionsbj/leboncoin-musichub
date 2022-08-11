@@ -159,9 +159,8 @@ class AlbumsFragment : BaseFragment(), AlbumItemClickListener {
             if (albums.isNotEmpty()) {
                 didFetchAlbums(albums)
             } else {
-                // Try fetching from local DB
+                // Try fetching from remote DB
                 viewModel.fetchAlbums()
-                println("// EMPTY Try fetching from remote DB")
             }
         }
 
