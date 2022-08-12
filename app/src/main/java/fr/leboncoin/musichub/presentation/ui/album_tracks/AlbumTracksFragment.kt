@@ -73,10 +73,10 @@ class AlbumTracksFragment : BaseFragment() {
         if (activity?.resources?.getBoolean(R.bool.isLandscape) == true) {
             navController.navigateUp()
         }
-        arguments?.getParcelable<Album>(AlbumsFragment.ALBUM)?.let { album ->
-            this.album = album
-            trackItemAdapter?.updateDataSet(album.tracks)
-        }
+//        arguments?.getParcelable<Album>(AlbumsFragment.ALBUM)?.let { album ->
+//            this.album = album
+//            trackItemAdapter?.updateDataSet(album.tracks)
+//        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -9,4 +9,5 @@
 
     <string name="error_unexpected_error_occurred">Une erreur est survenue lors du chargement des morceaux.\nVeuillez réessayer.</string>
     <string name="error_check_internet_connection">Impossible de joindre le serveur. Vérifiez votre connexion internet.</string>
+    <string name="empty_view">Aucun Album choisi\nCliquez sur un Album</string>
 </resources>

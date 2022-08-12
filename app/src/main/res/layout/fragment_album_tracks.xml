@@ -7,6 +7,21 @@
     android:layout_height="match_parent"
     tools:context=".presentation.ui.albums.AlbumsFragment">
 
+    <TextView
+        android:id="@+id/empty_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:gravity="center"
+        style="@style/Theme.MusicHub.EmptyViewNoTracks"
+        android:text="@string/empty_view"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible"
+        app:drawableTopCompat="@drawable/no_data" />
+
     <ProgressBar
         android:id="@+id/album_tracks_fragment_progress_bar"
         style="?android:attr/progressBarStyle"
@@ -24,11 +39,10 @@
         style="@style/Theme.MusicHub.Background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
-        android:background="#B5E4CF"
-
-        android:paddingTop="@dimen/_6sdp"
-        android:paddingBottom="@dimen/_6sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:context=".presentation.ui.albums.AlbumsFragment" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

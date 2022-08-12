@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_marginStart="@dimen/_4sdp"
-    android:layout_marginEnd="@dimen/_4sdp"
     android:layout_marginTop="@dimen/_6sdp"
+    android:layout_marginEnd="@dimen/_4sdp"
+    android:layout_marginBottom="@dimen/_6sdp"
     app:cardCornerRadius="@dimen/_4sdp"
     app:cardElevation="@dimen/_4sdp">
 
@@ -18,16 +19,16 @@
             android:id="@+id/track_thumbnail"
             android:layout_width="@dimen/_60sdp"
             android:layout_height="@dimen/_60sdp"
+            android:layout_margin="@dimen/_1sdp"
             android:contentDescription="@string/track_thumbnail_desc"
             android:elevation="@dimen/_2sdp"
-            android:layout_margin="@dimen/_1sdp"
-            app:strokeColor="@color/black_alpha_50"
-            app:strokeWidth="0.5dp"
+            android:src="@drawable/thumbnail_placeholder"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="H,1:1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:src="@drawable/thumbnail_placeholder" />
+            app:strokeColor="@color/black_alpha_50"
+            app:strokeWidth="0.5dp" />
 
         <TextView
             android:id="@+id/track_title"
@@ -37,12 +38,12 @@
             android:layout_marginStart="@dimen/_8sdp"
             android:layout_marginEnd="@dimen/_8sdp"
             android:fontFamily="@font/lato_regular"
+            tools:text="Culpa odio esse rerum omnis laboriosam voluptate repudiandae"
             android:textSize="@dimen/_12ssp"
             app:layout_constraintBottom_toBottomOf="@+id/track_thumbnail"
             app:layout_constraintEnd_toStartOf="@+id/track_overflow_button"
             app:layout_constraintStart_toEndOf="@+id/track_thumbnail"
-            app:layout_constraintTop_toTopOf="@+id/track_thumbnail"
-            android:text="Culpa odio esse rerum omnis laboriosam voluptate repudiandae" />
+            app:layout_constraintTop_toTopOf="@+id/track_thumbnail" />
 
         <ImageButton
             android:id="@+id/track_overflow_button"

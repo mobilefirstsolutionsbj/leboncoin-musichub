@@ -85,7 +85,6 @@ class AlbumsFragment : BaseFragment(), AlbumItemClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         this.binding = FragmentAlbumsBinding.bind(view)
-
         navController = Navigation.findNavController(
             requireActivity(),
             R.id.main_fragment_container
