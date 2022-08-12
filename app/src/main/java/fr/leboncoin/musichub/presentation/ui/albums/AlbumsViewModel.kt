@@ -32,7 +32,6 @@ class AlbumsViewModel @Inject constructor(
 
     fun selectAlbum(item: Album) {
         _selectedAlbum.postValue(item)
-        println("[ AlbumsViewModel ] - selectedItem - ${selectedItem.value}")
     }
 
     fun fetchAlbums() {

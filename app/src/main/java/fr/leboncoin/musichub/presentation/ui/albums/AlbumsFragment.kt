@@ -5,7 +5,6 @@ import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ProgressBar
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -26,7 +25,6 @@ class AlbumsFragment : BaseFragment(), AlbumItemClickListener {
 
     companion object {
         const val ALBUMS = "albums"
-        const val ALBUM = "album"
         const val LIST_STATE_KEY = "LIST_STATE_KEY"
         const val ITEM_VIEW_CACHE_SIZE = 20
     }
@@ -36,7 +34,6 @@ class AlbumsFragment : BaseFragment(), AlbumItemClickListener {
     private var albumItemAdapter: AlbumItemAdapter? = null
     private var binding: FragmentAlbumsBinding? = null
     private var rootView: View? = null
-    private var btnRetry: Button? = null
     private var swipeRefresh: SwipeRefreshLayout? = null
     private var recyclerView: RecyclerView? = null
     private var mListState: Parcelable? = null
@@ -122,7 +119,6 @@ class AlbumsFragment : BaseFragment(), AlbumItemClickListener {
 
     private fun bindViews(binding: FragmentAlbumsBinding) {
         progressBar = binding.albumsFragmentProgressBar
-        btnRetry = binding.albumsFragmentBtnRetry
         swipeRefresh = binding.albumsFragmentSwipeRefresh
         recyclerView = binding.albumsFragmentList
     }
@@ -159,7 +155,7 @@ class AlbumsFragment : BaseFragment(), AlbumItemClickListener {
             if (albums.isNotEmpty()) {
                 didFetchAlbums(albums)
             } else {
-                // Try fetching from remote DB
+                // Fetching from remote if nothing found in database
                 viewModel.fetchAlbums()
             }
         }
@@ -204,12 +200,6 @@ class AlbumsFragment : BaseFragment(), AlbumItemClickListener {
 
     override fun onDestroy() {
         albumItemAdapter = null
-        binding = null
-        rootView = null
-        progressBar = null
-        btnRetry = null
-        swipeRefresh = null
-        recyclerView = null
         mListState = null
         savedInstanceState = null
         super.onDestroy()

@@ -73,10 +73,9 @@ class AlbumTracksFragment : BaseFragment() {
         if (activity?.resources?.getBoolean(R.bool.isLandscape) == true) {
             navController.navigateUp()
         }
-//        arguments?.getParcelable<Album>(AlbumsFragment.ALBUM)?.let { album ->
-//            this.album = album
-//            trackItemAdapter?.updateDataSet(album.tracks)
-//        }
+        binding?.let { binding ->
+            checkEmptyState(binding)
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -88,10 +87,19 @@ class AlbumTracksFragment : BaseFragment() {
         )
         binding?.let { binding ->
             setupViews(binding)
+            viewModel.selectedItem.observe(requireActivity()) { selectedAlbum ->
+                trackItemAdapter?.updateDataSet(selectedAlbum.tracks)
+                this.album = selectedAlbum
+                checkEmptyState(binding)
+            }
         }
-        viewModel.selectedItem.observe(requireActivity()) { album ->
-            this.album = album
-            trackItemAdapter?.updateDataSet(album.tracks)
+    }
+
+    private fun checkEmptyState(binding: FragmentAlbumTracksBinding) {
+        binding.emptyView.visibility = if (this.album?.tracks?.isEmpty() == false) {
+            View.GONE
+        } else {
+            View.VISIBLE
         }
     }
 
